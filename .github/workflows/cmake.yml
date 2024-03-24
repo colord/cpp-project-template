@@ -27,6 +27,9 @@ jobs:
         run: |
           valgrind --leak-check=full --track-origins=yes --verbose --log-file=valgrind-output.log ~/build/main
 
+      - name: Sanity Check - see where valgrind is outputting the file
+        run: ls -la
+
       - name: Upload Valgrind Log
         uses: actions/upload-artifact@v4
         with:
