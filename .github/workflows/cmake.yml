@@ -17,9 +17,9 @@ jobs:
           path: |
             ~/.apt-cache
             ~/cmake-cache
-            key: ${{ runner.os }}-deps-cmake-${{ hashFiles('**/apt-get-install.txt', '**/CMakeLists.txt') }}
-            restore-keys: |
-              ${{ runner.os }}-deps-cmake-
+          key: ${{ runner.os }}-deps-cmake-${{ hashFiles('**/apt-get-install.txt', '**/CMakeLists.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-deps-cmake-
   
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
