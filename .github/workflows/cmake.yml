@@ -36,3 +36,14 @@ jobs:
 
       - name: Build
         run: cmake --build ~/cmake-cache --parallel
+
+      - name: Run Valgrind
+        run: |
+          valgrind --leak-check=full --track-origins=yes --verbose --log-file=valgrind-output.log ./main
+        working-directory: ~/cmake-cache
+
+      - name: Upload Valgrind Log
+        uses: actions/upload-artifact@v2
+        with:
+          name: valgrind-output
+          path: ~/cmake-cache/valgrind-output.log
