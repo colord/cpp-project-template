@@ -12,7 +12,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache-deps
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.apt-cache
@@ -38,10 +38,10 @@ jobs:
 
       - name: Run Valgrind
         run: |
-          valgrind --leak-check=full --track-origins=yes --verbose --log-file=valgrind-output.log ~/cmake-cache/main
+          valgrind --leak-check=full --track-origins=yes --verbose --log-file=~/cmake-cache/valgrind-output.log ~/cmake-cache/main
 
       - name: Upload Valgrind Log
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: valgrind-output
           path: ~/cmake-cache/valgrind-output.log
