@@ -35,4 +35,4 @@ jobs:
           cmake -B ~/cmake-cache -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
       - name: Build
-        run: cmake --build ~cmake-cache --parallel
+        run: cmake --build ~/cmake-cache --parallel
