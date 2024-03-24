@@ -27,6 +27,7 @@
       "args": [
         "--build",
         "bin/",
+        "--parallel"
       ],
       "problemMatcher": [
         "$gcc"
