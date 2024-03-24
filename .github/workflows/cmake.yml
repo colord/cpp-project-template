@@ -3,7 +3,7 @@ name: C++ CI with Valgrind and Clang-Tidy
 on: [push]
 
 jobs:
-  build-and-analyze:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +26,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake valgrind clang-tidy
-          xargs apt-mark auto < apt-get-install.txt > /dev/null
+          apt-mark auto > apt-get-install.txt
 
       - name: Configure CMake
         if: steps.cache-deps.outputs.cache-hit != 'true'
