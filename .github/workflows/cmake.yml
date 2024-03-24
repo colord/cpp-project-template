@@ -39,8 +39,7 @@ jobs:
 
       - name: Run Valgrind
         run: |
-          valgrind --leak-check=full --track-origins=yes --verbose --log-file=valgrind-output.log ./main
-        working-directory: ${{ github.workspace }}/cmake-cache
+          valgrind --leak-check=full --track-origins=yes --verbose --log-file=valgrind-output.log ~/cmake-cache/main
 
       - name: Upload Valgrind Log
         uses: actions/upload-artifact@v2
