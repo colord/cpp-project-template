@@ -9,39 +9,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         name: Check out repository code
-
-      - name: Cache dependencies
-        id: cache-deps
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.apt-cache
-            ~/cmake-cache
-          key: ${{ runner.os }}-deps-cmake-${{ hashFiles('**/CMakeLists.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-deps-cmake-
   
       - name: Install dependencies
-        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake valgrind clang-tidy
 
       - name: Configure CMake
-        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ~/cmake-cache
-          cmake -B ~/cmake-cache -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+          mkdir -p ~/build
+          cmake -B ~/build -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
       - name: Build
-        run: cmake --build ~/cmake-cache --parallel
+        run: cmake --build ~/build --parallel
 
       - name: Run Valgrind
         run: |
-          valgrind --leak-check=full --track-origins=yes --verbose --log-file=~/cmake-cache/valgrind-output.log ~/cmake-cache/main
+          valgrind --leak-check=full --track-origins=yes --verbose --log-file=~/build/valgrind-output.log ~/build/main
 
       - name: Upload Valgrind Log
         uses: actions/upload-artifact@v4
         with:
           name: valgrind-output
-          path: ~/cmake-cache/valgrind-output.log
+          path: ~/build/valgrind-output.log
