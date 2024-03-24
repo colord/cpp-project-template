@@ -17,7 +17,7 @@ jobs:
           path: |
             ~/.apt-cache
             ~/cmake-cache
-          key: ${{ runner.os }}-deps-cmake-${{ hashFiles('**/apt-get-install.txt', '**/CMakeLists.txt') }}
+          key: ${{ runner.os }}-deps-cmake-${{ hashFiles('**/CMakeLists.txt') }}
           restore-keys: |
             ${{ runner.os }}-deps-cmake-
   
@@ -26,7 +26,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake valgrind clang-tidy
-          apt-mark showmanual > apt-get-install.txt
 
       - name: Configure CMake
         if: steps.cache-deps.outputs.cache-hit != 'true'
